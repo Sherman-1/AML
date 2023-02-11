@@ -45,6 +45,22 @@ def get_logger(names, n_tasks=None):
         log[mode]['final_forget'] = 0.
 
     return log
+    
+def get_confirm_token(response):
+    for key, value in response.cookies.items():
+        if key.startswith('download_warning'):
+            return value
+
+    return None
+
+def save_response_content(response, destination):
+    CHUNK_SIZE = 32768
+
+    with open(destination, "wb") as f:
+        for chunk in response.iter_content(CHUNK_SIZE):
+            if chunk: # filter out keep-alive new chunks
+                f.write(chunk)
+
 
 def get_temp_logger(exp, names):
     log = OD()
@@ -70,7 +86,7 @@ def sho_(x, nrow=8):
     Image.open('tmp.png').show()
 
 # https://github.com/tristandeleu/pytorch-meta/
-from torchvision.datasets.utils import _get_confirm_token, _save_response_content
+# from torchvision.datasets.utils import _get_confirm_token, _save_response_content
 
 def _quota_exceeded(response: "requests.models.Response"):
     return False
