@@ -133,4 +133,4 @@ def download_file_from_google_drive(file_id, root, filename=None, md5=None):
             )
             raise RuntimeError(msg)
 
-        _save_response_content(response, fpath)
+        save_response_content(response, fpath)

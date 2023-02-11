@@ -49,7 +49,7 @@ parser.add_argument('--exp_name', type=str, default='tmp')
 parser.add_argument('--run_num', type=str, default='1')
 parser.add_argument('--wandb_project', type=str, default='AML')
 parser.add_argument('--wandb_entity', type=str)
-parser.add_argument('--wandb_log', type=str, default='off', choices=['off', 'online'])
+parser.add_argument('--wandb_log', type=str, default='online', choices=['off', 'online'])
 
 """ HParams """
 parser.add_argument('--lr', type=float, default=0.1)
@@ -84,6 +84,7 @@ if torch.cuda.is_available():
     device = 'cuda:0'
 else:
     device = 'cpu'
+    print("Training with CPU")
 
 # make dataloaders
 train_loader, val_loader, test_loader  = get_data(args)
